@@ -1,0 +1,13 @@
+function onChange(control, oldValue, newValue, isLoading) {
+    if (isLoading || !newValue) return;
+
+    var callerId = g_form.getValue('caller');
+    var ga = new GlideAjax('GetManagerInfo');
+    ga.addParam('sysparm_name', 'getManagerEmail');
+    ga.addParam('sysparm_user_id', callerId);
+
+    ga.getXML(function(response) {
+        var answer = response.responseXML.documentElement.getAttribute("answer");
+        g_form.setValue('manager_email', answer);
+    });
+}
